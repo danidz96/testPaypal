@@ -2,6 +2,8 @@
 
 require 'paypal/autoload.php';
 
+define('URL_SITIO', 'http://localhost/testPaypal');
+
 $apiContext = new \PayPal\Rest\ApiContext(
   new \PayPal\Auth\OAuthTokenCredential(
     'AebP0y8pW7zkkntmQa_6LtVcPnmUVTNgdBNdJjU9nTMw5IaMQflDtSeYgXflkbYcFb2yW6CNm3SGzxvX',//ID Cliente
