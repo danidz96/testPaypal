@@ -6,6 +6,7 @@ if (!isset($_POST['producto'], $_POST['precio'])) {
 
 use PayPal\Api\Payer;
 use PayPal\Api\Item;
+use PayPal\Api\ItemList;
 
 require 'config.php';
 
@@ -24,5 +25,6 @@ $articulo->setName($producto)
          ->setQuantity(1)
          ->setPrice($precio);
 
-
+$listaArticulos = new ItemList();
+$listaArticulos->setItems(array($articulo));
  ?>
