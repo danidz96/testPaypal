@@ -11,6 +11,7 @@ use PayPal\Api\Details;
 use PayPal\Api\Amount;
 use PayPal\Api\Transaction;
 use PayPal\Api\RedirectUrls;
+use PayPal\Api\Payment;
 
 require 'config.php';
 
@@ -50,5 +51,23 @@ $redireccionar = new RedirectUrls();
 $redireccionar->setReturnUrl(URL_SITIO . "/pago_finalizado.php?exito=true")
               ->setCancelUrl(URL_SITIO. "/pago_finalizado.php?exito=false");
 
-echo $redireccionar->getReturnUrl();
+$pago = new Payment();
+$pago->setIntent("sale")
+     ->setPayer($compra)
+     ->setRedirectUrls($redireccionar)
+     ->setTransactions(array($transaccion));
+
+try {
+  $pago->create($apiContext);
+} catch (Paypal\Exception\PaypalConnectionException $pce) {
+  echo "<pre>";
+  print_r(json_decode($pce->getData()));
+  exit;
+  echo "<pre>";
+}
+
+$aprobado = $pago->getApprovalLink();
+
+header("Location: {$aprobado}");
+
  ?>
